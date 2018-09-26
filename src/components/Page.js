@@ -1,31 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+const years = [2014, 2015,2016,2017, 2018]
+
 export class Page extends Component {
   onBtnClick = e => {
     const year = +e.currentTarget.innerText
     this.props.getPhotos(year)
   }
+
+
+  renderYearbutton = year => {
+    return (
+        <button key={year} className='btn' onClick={this.onBtnClick}>
+          {year}
+        </button>
+      )
+  }
+
   render() {
     const { year, photos, isFetching } = this.props // вытащили isFetching
     return (
        <div className='ib page'>
          <p>
-           <button className='btn' onClick={this.onBtnClick}>
-           2018
-           </button>{' '}
-           <button className='btn' onClick={this.onBtnClick}>
-           2017
-           </button>{' '}
-           <button className='btn' onClick={this.onBtnClick}>
-           2016
-           </button>{' '}
-           <button className='btn' onClick={this.onBtnClick}>
-           2015
-           </button>{' '}
-           <button className='btn' onClick={this.onBtnClick}>
-           2014
-           </button>
+           {years.map(this.renderYearbutton)}
          </p>
          <h3>{year} год</h3>
          {/* добавили отрисовку по условию */}
