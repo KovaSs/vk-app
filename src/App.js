@@ -1,21 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import { User } from './components/User';
+import { Page } from './components/Page';
+import { getPhotos } from './actions/PageActions';
 
 class App extends Component {
   render() {
+    const {user, page, getPhotosAction } = this.props
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="app">
+        <Page
+          photos={page.photos}
+          year={page.year}
+          isFetching={page.isFetching}
+          getPhotos={getPhotosAction}
+        />
+        <User name={user.name} />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+const mapStateToProps = store => {
+  return {
+    user: store.user,
+    page: store.page
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getPhotosAction: year => dispatch(getPhotos(year))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+  )(App)
