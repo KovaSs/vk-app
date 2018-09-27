@@ -95,12 +95,13 @@ h3 {
   display: inline-block;
   margin: 10px 2px;
   width: 130px;
-  margin-right: 5px;
+  margin: 10px;
+  
 }
 
 .img-container {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   align-content: flex-start;
 }

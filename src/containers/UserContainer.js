@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { User } from '../components/User';
-import { heandleLogin } from '../actions/UserActions';
+import { handleLogin, getLoginStatus, handleLogout } from '../actions/UserActions';
 
 class UserContainer extends Component {
+  componentDidMount() {
+    this.props.getLoginStatus()
+  }
+
   render() {
-    const { user, heandleLogin } = this.props
+    const { user, handleLogin, handleLogout } = this.props
     return (
       <User 
         name={user.name}
         isFetching={user.isFetching}
         error={user.error}
-        heandleLogin={heandleLogin}
+        handleLogin={handleLogin}
+        handleLogout={handleLogout}
+        autorized={user.autorized}
       />
     )
   }
@@ -25,7 +31,9 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    heandleLogin: () => dispatch(heandleLogin())
+    handleLogin: () => dispatch(handleLogin()),
+    getLoginStatus: () => dispatch(getLoginStatus()),
+    handleLogout: () => dispatch(handleLogout())
   }
 }
 

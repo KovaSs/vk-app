@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const years = [2014, 2015,2016,2017, 2018]
-
 export class Page extends Component {
   onBtnClick = e => {
     const year = +e.currentTarget.innerText
     this.props.getPhotos(year)
   }
-
+  // Ф-ция рендеринга фото
   renderTemplate = () => {
     const { photos, isFetching, error } = this.props
     if(error) {
@@ -29,22 +27,23 @@ export class Page extends Component {
       )
     }
   }
-
-  renderYearbutton = year => {
-    return (
-        <button key={year} className='btn' onClick={this.onBtnClick}>
-          {year}
+  // Функция рендеринга кнопок
+  renderBtn = ()  => {
+    const years = [2014, 2015,2016,2017, 2018]
+    return years.map((item) => {
+      return (
+        <button key={item} className='btn' onClick={this.onBtnClick}>
+          {item}
         </button>
       )
+    })
   }
 
   render() {
     const { year, photos} = this.props
     return (
        <div className='ib page'>
-         <p>
-           {years.map(this.renderYearbutton)}
-         </p>
+         <p>{this.renderBtn()}</p>
          <h3>{year} год [{photos.length}]</h3>
           <div className='img-container'>
             {this.renderTemplate()}

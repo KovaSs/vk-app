@@ -6,7 +6,7 @@ export class User extends Component {
     const { name, error, isFetching} = this.props
 
     if(error) {
-      return <p> Во время запроса произошла ошибкаб обновите страницу</p>
+      return <p> Во время запроса произошла ошибка обновите страницу</p>
     }
 
     if(isFetching){
@@ -15,20 +15,27 @@ export class User extends Component {
 
     if(name) {
       return <p> Привет, {name}!</p>
-    } else {
-      return (
-        <button className='btn' onClick={this.props.heandleLogin}>
-          Войти
-        </button>
-      )
     }
   }
-  render() {
-    console.log('---','<User/> render')
+
+  loginBtn = () => {
+    const { name, handleLogout, handleLogin, isFetching } = this.props
+    const authorized = Boolean(name)
+    const btnName = authorized ? 'Выйти' : 'Войти'
+    const onClick = authorized ? handleLogout : handleLogin
     return (
-       <div className='ib user'>
-         {this.renderTemplate()}
-       </div>
+      <button disabled={isFetching} className="btn" onClick={onClick}>
+        {btnName}
+      </button>
+    )
+  }
+
+  render() {
+    return (
+       <div className="ib user">
+        {this.renderTemplate()}
+        {this.loginBtn()}
+      </div>
     );
   }
 }
@@ -37,5 +44,5 @@ User.propTypes = {
   name: PropTypes.string.isRequired,
   error: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
-  heandleLogin: PropTypes.func.isRequired
+  handleLogin: PropTypes.func.isRequired
 }
